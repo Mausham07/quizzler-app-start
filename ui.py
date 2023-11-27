@@ -9,7 +9,7 @@ class QuizUi:
         self.quiz = quiz_question
 
         self.window = Tk()
-        self.window.title("Quiz")
+        self.window.title("QUIZ - TRUE || FALSE")
         self.window.config(padx=20, pady=20, bg=THEME_COLOR)
         
         self.canvas = Canvas(height=250,width=300, bg="white")
@@ -35,13 +35,33 @@ class QuizUi:
         self.window.mainloop()
     
     def question(self):
-        question = self.quiz.next_question()
-        self.canvas.itemconfig(self.quiz_question, text=question)
+        if self.quiz.still_has_questions():
+            self.canvas.config(bg="white")
+            self.quiz_score.config(text=f"Score: {self.quiz.score}")
+
+            question = self.quiz.next_question()
+            self.canvas.itemconfig(self.quiz_question, text=question)
+        
+        else:
+            self.canvas.itemconfig(self.quiz_question, text=f"You have reached the end of question. You got {self.quiz.score} correct answers out of 10.")
+            self.true.config(state="disabled")
+            self.false.config(state="disabled")
 
     def check_true(self):
         choice = "True"
-        self.quiz.check_answer(choice)
+        check = self.quiz.check_answer(choice)
+        self.feedback(check)
 
     def check_false(self):
         choice = "False"
-        self.quiz.check_answer(choice)
+        check = self.quiz.check_answer(choice)
+        self.feedback(check)
+
+    def feedback(self, check):
+        self.check = check
+        if self.check:
+            self.canvas.config(bg="green")
+        else:
+            self.canvas.config(bg="red")
+        
+        self.window.after(1000, self.question)
