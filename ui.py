@@ -43,6 +43,8 @@ class QuizUi:
             self.canvas.itemconfig(self.quiz_question, text=question)
         
         else:
+            self.canvas.config(bg="white")
+            self.quiz_score.config(text=f"Score: {self.quiz.score}")
             self.canvas.itemconfig(self.quiz_question, text=f"You have reached the end of question. You got {self.quiz.score} correct answers out of 10.")
             self.true.config(state="disabled")
             self.false.config(state="disabled")
