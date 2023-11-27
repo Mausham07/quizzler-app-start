@@ -23,10 +23,10 @@ class QuizUi:
         self.quiz_score = Label(text= "Score: 0", fg="white", highlightthickness=0, bg=THEME_COLOR)
         self.quiz_score.grid(row=0, column=1)
 
-        self.true = Button(image=true_img, highlightthickness=0)
+        self.true = Button(image=true_img, highlightthickness=0, command= self.check_true)
         self.true.grid(row=2, column=0)
 
-        self.false = Button(image=false_img, highlightthickness=0)
+        self.false = Button(image=false_img, highlightthickness=0, command= self.check_false)
         self.false.grid(row=2, column=1)
 
         self.question()
@@ -37,3 +37,11 @@ class QuizUi:
     def question(self):
         question = self.quiz.next_question()
         self.canvas.itemconfig(self.quiz_question, text=question)
+
+    def check_true(self):
+        choice = "True"
+        self.quiz.check_answer(choice)
+
+    def check_false(self):
+        choice = "False"
+        self.quiz.check_answer(choice)
